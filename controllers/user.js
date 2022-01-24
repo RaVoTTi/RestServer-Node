@@ -1,26 +1,15 @@
 const { response, request } = require("express");
 
 const userGet = (req = request, res = response) => {
-  const { q, apikey, name, page, limit } = req.query;
+  
 
-  res.status(200).json({
-    msg: "get API - controller",
-    q,
-    apikey,
-    name,
-    page,
-    limit,
-  });
-};
+  res.status(201).render('login');
+}
 
 const userPost = (req = request, res = response) => {
-  const { name, email } = req.body;
+  // const { password, email } = req.body;
 
-  res.status(201).json({
-    msg: "post API - controller",
-    name,
-    email,
-  });
+  res.status(201).redirect('/dashboard')
 };
 
 const userPut = (req = request, res = response) => {
