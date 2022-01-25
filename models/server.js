@@ -16,7 +16,11 @@ class Server {
   routes() {
     this.app.use("/user", require("../routes/user"));
     this.app.use('/dashboard', require('../routes/dashboard'))
-  }
+    this.app.get('*', (req, res) => {
+      res.render('404')
+    })
+    }
+  
   middlewares() {
     hbs.registerPartials( '/home/rivo/Programming/Node/03-Login-Crud/RestServer-Node/views/partials', (err) => {});
 
