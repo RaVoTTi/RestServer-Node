@@ -14,7 +14,7 @@ class Server {
   }
 
   routes() {
-    this.app.use("/user", require("../routes/user"));
+    this.app.use(["/user", "/login"], require("../routes/user"));
     this.app.use('/dashboard', require('../routes/dashboard'))
     this.app.get('*', (req, res) => {
       res.render('404')
