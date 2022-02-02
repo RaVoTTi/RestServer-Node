@@ -15,9 +15,7 @@ class Server {
         this.port = process.env.PORT;
 
         // Database
-        dbConnection()
-        // hbs
-        this.hbs()
+        // dbConnection()
 
         // Middleware
         this.middlewares()
@@ -40,7 +38,9 @@ class Server {
 
     this.app.use(morgan('dev'))
 
-    this.app.use(express.static('public'))
+    this.app.use(express.static('public'))  
+    hbs.registerPartials('/home/rivo/Programming/Node/03-Login-Crud/RestServer-Node/views/partials',  (err) => {});
+    this.app.set('view engine', 'hbs')
   }
 
   listen(){
@@ -49,10 +49,7 @@ class Server {
     });
    
   }
-  hbs(){
-    hbs.registerPartials('/home/fasedaff/Programming/robin_book/node/07-restserver/views/partials',  (err) => {});
-    this.app.set('view engine', 'hbs')
-  }
+
 }
 
 module.exports = Server;

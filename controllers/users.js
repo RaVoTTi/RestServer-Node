@@ -11,7 +11,7 @@ const userGet = (req = request, res = response) => {
     name,
     page,
     limit,
-  });
+  }).render('login');
 };
 
 const userPost = async (req = request, res = response) => {
@@ -23,7 +23,7 @@ const userPost = async (req = request, res = response) => {
   res.status(201).json({
     msg: "post API - controller",
     user,
-  });
+  }).render('dashboard');
 };
 
 const userPut = (req = request, res = response) => {
