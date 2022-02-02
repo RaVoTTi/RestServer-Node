@@ -1,4 +1,7 @@
 const { response, request } = require("express");
+const user = require("../models/user");
+
+const User = require('../models/user')
 
 const userGet = (req = request, res = response) => {
   
@@ -6,9 +9,18 @@ const userGet = (req = request, res = response) => {
   res.status(201).render('login');
 }
 
-const userPost = (req = request, res = response) => {
-  // const { password, email } = req.body;
-
+const userPost = async (req = request, res = response) => {
+  const {name, password, email, role  } = req.body;
+  
+  // const existe = User.findOne({email})
+  // if(existe ){
+  //   res.status(404).json({
+  //     msg: 'el email debe ser unico'
+  //   })
+  // }
+  // const user = new User({name, password, email, role  })
+  console.log(req.body)
+  // await user.save()
   res.status(201).redirect('/dashboard')
 };
 

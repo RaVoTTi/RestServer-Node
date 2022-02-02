@@ -1,11 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const hbs = require("hbs");
+const {dbConnection} = require('../database/config')
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+
+    //DB Connection
+    dbConnection()
 
     // Middleware
     this.middlewares();
@@ -14,7 +18,7 @@ class Server {
   }
 
   routes() {
-    this.app.use(["/user", "/login"], require("../routes/user"));
+    this.app.use(["/user", "/login"], require("../routes/users"));
     this.app.use('/dashboard', require('../routes/dashboard'))
     this.app.get('*', (req, res) => {
       res.render('404')

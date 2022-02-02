@@ -7,7 +7,7 @@ const {
   userPatch,
   userPost,
   userPut,
-} = require("../controllers/user");
+} = require("../controllers/users");
 
 router.get("/", userGet);
 
