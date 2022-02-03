@@ -11,7 +11,7 @@ router.get("/", loginGet)
 
 router.post("/", [
     check('email', 'El email no es valido').isEmail(),
-    check('email').not().custom(validationEmail),
+    check('email').custom(validationEmail),
     check('password', 'El password es obligatorio').notEmpty(),
     validationCamp
 ], loginPost)

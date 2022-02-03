@@ -15,7 +15,7 @@ class Server {
         this.port = process.env.PORT;
 
         // Database
-        // dbConnection()
+        dbConnection()
 
         // Middleware
         this.middlewares()

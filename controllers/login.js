@@ -16,7 +16,7 @@ const loginPost = async (req = request, res = response) => {
     res.status(200).json({
       email,
       password
-    });
+    }).redirect('dashboard');
   };
 
 
