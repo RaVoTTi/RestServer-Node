@@ -22,7 +22,7 @@ router.post("/",[
   check('email').custom(validationEmail),
   check('name', 'El name es obligatorio').notEmpty(),
   check('password', 'El password es obligatorio').notEmpty(),
-  check('rol').custom(validationRole),
+  check('role').custom(validationRole),
   
   //! check('rol').custom((rol)=> validationRole(rol))
   //? check('rol', 'No es un rol valido').isIn(['ADMIN_ROLE','USER_ROLE']),

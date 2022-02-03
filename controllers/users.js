@@ -15,15 +15,15 @@ const userGet = (req = request, res = response) => {
 };
 
 const userPost = async (req = request, res = response) => {
-  const { name, email, password, rol } = req.body;
+  const { name, email, password, role } = req.body;
 
-  const user = new User({ name, email, password, rol });
+  const user = new User({ name, email, password, role });
   await user.save();
 
   res.status(201).json({
     msg: "post API - controller",
     user,
-  }).render('dashboard');
+  }).render('location');
 };
 
 const userPut = (req = request, res = response) => {

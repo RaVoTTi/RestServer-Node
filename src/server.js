@@ -27,14 +27,18 @@ class Server {
 
   routes() {
     
-    this.app.use('/api/user', require('../routes/users'))
+    this.app.use('/api/users', require('../routes/users'))
     this.app.use('/login', require('../routes/login'))
+    this.app.use('/location', require('../routes/location'))
+    this.app.use('*', require('../routes/404'))
   }
   middlewares(){
 
     this.app.use(cors())
 
     this.app.use(express.json())
+
+    this.app.use(express.urlencoded({extended: true}))
 
     this.app.use(morgan('dev'))
 

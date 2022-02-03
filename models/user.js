@@ -15,7 +15,7 @@ const userSchema = new Schema ({
         type: String,
         required: [true, 'password is required']
     },
-    rol: {
+    role: {
         type: String,
         required: [true, 'rol is required'],
         // enum: ['ADMIN_ROLE','USER_ROLE'],
@@ -30,6 +30,7 @@ const userSchema = new Schema ({
         type:Boolean,
         default:false
     },
+    
 })
 
 // se utiliza function por el this que referencia al password
