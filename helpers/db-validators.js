@@ -1,6 +1,7 @@
 const Role = require("../models/role");
 const User= require("../models/user");
-
+const Location = require("../models/location")
+const Division = require("../models/division")
 
 const validationRole = async (role = "") => {
   const exist = await Role.findOne({ role });
@@ -16,7 +17,23 @@ const validationEmail = async (email = "") => {
     }
 };
 
+const validationTitle= async (title = "") => {
+  const exist = await Location.findOne({title})
+  if (exist){
+    throw new Error(`El title ${title} esta registrado`);
+  }
+};
+
+const validationCategory= async (division = "") => {
+  const exist = await Division.findOne({division})
+  if (!exist){
+    throw new Error(`El division no ${division} esta registrado`);
+  }
+};
+
 module.exports = {
   validationRole,
-  validationEmail
+  validationEmail,
+  validationTitle,
+  validationCategory
 };

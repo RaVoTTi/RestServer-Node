@@ -9,4 +9,4 @@ const divisionSchema = new Schema({
 
 })
 
-module.exports = model('Division', roleSchema)
+module.exports = model('Division', divisionSchema)

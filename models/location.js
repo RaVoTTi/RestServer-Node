@@ -14,13 +14,10 @@ const locationSchema = new Schema ({
     division: {
         type: String,
         required: [true, 'category is required'],
-        
     },
     number: {
         type: String,
         required: [true, 'number is required'],
-
-
     },
     schedule: {
         type: String,
