@@ -1,14 +1,21 @@
-const { response, request } = require("express");
+const { response, request, query } = require("express");
 const Location = require('../models/location')
 
 
 
 const locationGet = async (req = request, res = response) => {
-    const {division, title} = req.query;
-    const locations = await Location.find({division })  
+    const {division, title, limit = 5, since = 0} = req.query;
+    // const query = {division: 'alojamiento'} 
+    
+    // const locations = await Location.find().skip(Number(since)).limit(Number(limit))
+    // const count = await Location.count() 
 
-    res.status(200).json({locations})
-    // .render('location')
+    const [count, locations] = await Promise.all([
+      Location.count(),
+      Location.find().skip(Number(since)).limit(Number(limit))
+    ])
+    res.status(200).json({count, locations})
+  
   };
 
 const locationPost = async (req = request, res = response) => {
@@ -18,14 +25,26 @@ const locationPost = async (req = request, res = response) => {
     console.log(location)
     await location.save()
 
-    res.status(201).redirect("/location")
+    res.status(201).json({
+      location
+    })
   };
 
+  const locationPut = async (req = request, res = response) =>{
+      const {id} = req.params
+      const {_id, ...resto} = req.body
+
+      const location = await Location.findByIdAndUpdate(id, resto, {new: true
+      })
+
+      res.status(202).json({location})
+  }
 
 
 
   module.exports = {
       locationPost,
-      locationGet
-  }
+      locationGet,
+      locationPut
+    }
 

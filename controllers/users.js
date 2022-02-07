@@ -1,17 +1,18 @@
 const { response, request } = require("express");
 const User = require("../models/user");
 
-const userGet = (req = request, res = response) => {
-  const { q, apikey, name, page, limit } = req.query;
+const userGet = async (req = request, res = response) => {
+  const {limit = 5, since = 0} = req.query;
+  const query = {estado: true}
+  // const users = await User.find(query).skip(Number(since)).limit(Number(limit))
+  // const count = await User.countDocuments(query)
+  const [count, users] = await Promise.all([
+    User.countDocuments(query),
+    User.find(query).skip(Number(since)).limit(Number(limit))
 
-  res.status(200).json({
-    msg: "get API - controller",
-    q,
-    apikey,
-    name,
-    page,
-    limit,
-  }).render('login');
+  ])
+
+  res.status(200).json({count, users})
 };
 
 const userPost = async (req = request, res = response) => {
@@ -23,7 +24,7 @@ const userPost = async (req = request, res = response) => {
   res.status(201).json({
     msg: "post API - controller",
     user,
-  }).render('location');
+  });
 };
 
 const userPut = (req = request, res = response) => {

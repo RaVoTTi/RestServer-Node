@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require('cors');
 const { dbConnection } = require("../database/config");
-const hbs = require('hbs');
 const morgan = require('morgan')
 
 
@@ -43,8 +42,7 @@ class Server {
     this.app.use(morgan('dev'))
 
     this.app.use(express.static('public'))  
-    hbs.registerPartials('/home/rivo/Programming/Node/03-Login-Crud/RestServer-Node/views/partials',  (err) => {});
-    this.app.set('view engine', 'hbs')
+    
   }
 
   listen(){

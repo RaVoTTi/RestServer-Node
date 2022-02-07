@@ -30,10 +30,17 @@ const validationCategory= async (division = "") => {
     throw new Error(`El division no ${division} esta registrado`);
   }
 };
-
+const validationId = async (id )=>{
+  const exist = await Location.findById(id)
+  if(!exist){
+    throw new Error (`El id ${id} no existe`)
+  }
+}
 module.exports = {
   validationRole,
   validationEmail,
   validationTitle,
-  validationCategory
+  validationCategory,
+  validationId
+
 };
