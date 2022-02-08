@@ -5,7 +5,9 @@ const { response, request } = require("express");
 
 const get404 = (req = request, res = response) => {
   
-    res.render('404');
+    res.json({
+        msg: '404 not found'
+    })
   };
 
 
