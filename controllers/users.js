@@ -1,5 +1,6 @@
 const { response, request } = require("express");
 
+
 const User = require("../models/user");
 
 const userGet = async (req = request, res = response) => {
@@ -19,7 +20,10 @@ const userGet = async (req = request, res = response) => {
 const userPost = async (req = request, res = response) => {
   const { name, email, password, role } = req.body;
 
-  const user = new User({ name, email, password, role });
+  const salt = bcrypt.genSaltSync(10)
+
+  const user = new User({ name, email, password: User.encryptPassword(password), role });
+  
   await user.save();
 
   res.status(201).json({
@@ -31,9 +35,17 @@ const userPost = async (req = request, res = response) => {
 const userPut = async(req = request, res = response) => {
   const { id } = req.params;
 
-  const {email, google , _id, ...resto} = req.body
+  const {email, google, password , _id, ...resto} = req.body
   
+  if(password){
+    resto.password = User.encryptPassword(password)
+
+  }
+
   const user = await User.findByIdAndUpdate(id, resto, {new: true})
+
+  
+
 
   res.status(200).json({
     msg: "put API - controller",

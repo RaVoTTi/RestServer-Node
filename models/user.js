@@ -46,6 +46,22 @@ userSchema.pre('save', function (next) {
 
 
 })
+// userSchema.pre('findByIdAndUpdate', function (next) {
+//     const user = this;
+
+//     if(user.isModified('password')){
+//     const salt = bcrypt.genSaltSync(10)
+//     user.password = bcrypt.hashSync(user.password, salt)
+// }
+//     next()
+
+
+// })
+userSchema.statics.encryptPassword = (password = '')=>{
+    const salt = bcrypt.genSaltSync(10)
+    return bcrypt.hashSync(password, salt)
+ }
+
 
 userSchema.methods.comparePassword = function(password = ''){
    return bcrypt.compareSync(password, this.password)
