@@ -2,8 +2,8 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 
 const { validationCamp } = require("../middlewares/validation-camp");
-const { locationPost, locationPut, locationGet } = require("../controllers/location");
-const { validationTitle, validationCategory, validationId} = require("../helpers/db-validators");
+const { locationPost, locationPut, locationGet, locationDelete } = require("../controllers/location");
+const { validationTitle, validationCategory, validationLocationId} = require("../helpers/db-validators");
 
 // /location
 const router = Router();
@@ -28,10 +28,19 @@ router.post(
 router.put('/:id',
 [
   check('id','No es un id valido').isMongoId(),
-  check('id').custom(validationId),
+  check('id').custom(validationLocationId),
   check("division").custom(validationCategory),
   validationCamp
 ] ,
 locationPut)
+
+router.delete('/:id',
+[
+  check('id','No es un id valido').isMongoId(),
+  check('id').custom(validationLocationId),
+  validationCamp
+] ,
+locationDelete)
+
 
 module.exports = router;

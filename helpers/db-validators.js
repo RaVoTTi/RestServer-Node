@@ -30,8 +30,14 @@ const validationCategory= async (division = "") => {
     throw new Error(`El division no ${division} esta registrado`);
   }
 };
-const validationId = async (id )=>{
+const validationLocationId = async (id )=>{
   const exist = await Location.findById(id)
+  if(!exist){
+    throw new Error (`El id ${id} no existe`)
+  }
+}
+const validationUserId = async (id )=>{
+  const exist = await User.findById(id)
   if(!exist){
     throw new Error (`El id ${id} no existe`)
   }
@@ -41,6 +47,8 @@ module.exports = {
   validationEmail,
   validationTitle,
   validationCategory,
-  validationId
+  validationLocationId,
+  validationUserId
+
 
 };

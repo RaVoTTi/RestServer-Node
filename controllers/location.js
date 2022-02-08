@@ -40,11 +40,21 @@ const locationPost = async (req = request, res = response) => {
       res.status(202).json({location})
   }
 
+  const locationDelete = async (req = request, res = response) =>{
+    const {id} = req.params
+    const location = await Location.findByIdAndDelete(id)
+
+    res.status(202).json(location)
+}
+
+
 
 
   module.exports = {
       locationPost,
       locationGet,
-      locationPut
+      locationPut,
+      locationDelete,
+      
     }
 
