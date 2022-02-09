@@ -3,17 +3,19 @@ const { check } = require("express-validator");
 const { loginPost , loginGet} = require("../controllers/login");
 const { validationCamp } = require("../middlewares/validation-camp");
 const {  validationEmail } = require("../helpers/db-validators");
+const { validateJwt } = require("../middlewares/validation-jwt");
 
 
 
-// /login
+// /auth
 const router = Router();
 
-router.get("/", loginGet)
+router.get("/login", loginGet)
 
 
-router.post("/",
+router.post("/login",
 [
+
     check('email', 'El email no es valido').isEmail(),
     check('email').not().custom(validationEmail),
     check('password', 'El password es obligatorio').notEmpty(),

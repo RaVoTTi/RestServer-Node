@@ -20,7 +20,7 @@ const userGet = async (req = request, res = response) => {
 const userPost = async (req = request, res = response) => {
   const { name, email, password, role } = req.body;
 
-  const salt = bcrypt.genSaltSync(10)
+  
 
   const user = new User({ name, email, password: User.encryptPassword(password), role });
   
@@ -55,13 +55,18 @@ const userPut = async(req = request, res = response) => {
 
 const userDelete = async(req = request, res = response) => {
   
+
   const {id} = req.params
+  const userAuth = req.user
   
-  const user = await User.findByIdAndUpdate(id, {state: false}, {new: true})
+
+  const user= await User.findByIdAndUpdate(id, {state: false}, {new: true})
+  
 
   res.status(200).json({
-    msg: "delete API - controller",
-    user
+    user,
+    msg: "↓ Fue eliminado por ↓",
+    userAuth
   });
 };
 

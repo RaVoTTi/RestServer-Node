@@ -27,7 +27,7 @@ class Server {
   routes() {
     
     this.app.use('/api/users', require('../routes/users'))
-    this.app.use('/login', require('../routes/login'))
+    this.app.use('/auth', require('../routes/login'))
     this.app.use('/location', require('../routes/location'))
     this.app.use('*', require('../routes/404'))
   }

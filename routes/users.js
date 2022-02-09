@@ -1,17 +1,21 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { validationCamp } = require("../middlewares/validation-camp");
-
+const {
+  validationCamp,
+  validateJwt,
+  isAdminRole,
+  isRole,
+} = require("../middlewares");
 // /api/users
 const router = Router();
 
 const {
   userDelete,
   userGet,
-
   userPost,
   userPut,
 } = require("../controllers/users");
+
 const {
   validationRole,
   validationEmail,
@@ -51,13 +55,13 @@ router.put(
 router.delete(
   "/:id",
   [
+    validateJwt,
+    isRole("ADMIN_ROLE", "VENTAS_ROLE"),
     check("id", "No es un id valido").isMongoId(),
     check("id").custom(validationUserId),
     validationCamp,
   ],
   userDelete
 );
-
-
 
 module.exports = router;

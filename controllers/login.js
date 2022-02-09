@@ -1,4 +1,5 @@
 const { response, request } = require("express");
+const { generateJWT } = require("../helpers/generate-jwt");
 const User = require("../models/user");
 
 const loginGet = (req = request, res = response) => {
@@ -11,16 +12,29 @@ const loginPost = async (req = request, res = response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error(`El email ${email} no esta registrado`);
-  }
-  const access = user.comparePassword(password);
-  if (!access) {
-    res.json({
-      msg: 'La contrasea es incorrecta'
+    return res.json({
+      msg: `El email ${email} no esta registrado`
     })
   }
+  if(user.state !== true){
+    return res.json({
+      msg: 'El usuario esta inactivo'
+    })
+  }
+
+  const access = user.comparePassword(password);
+  if (!access) {
+    return res.json({
+      msg: 'El password es incorrecto'
+    })
+  }
+
+  const token = await generateJWT(user.id)
   res.json({
-    msg: 'Correcto inicio de sesion'
+    msg: 'Correcto inicio de sesion',
+    user,
+    token
+    
   })
 };
 

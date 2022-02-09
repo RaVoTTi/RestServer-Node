@@ -58,6 +58,7 @@ userSchema.pre('save', function (next) {
 
 // })
 userSchema.statics.encryptPassword = (password = '')=>{
+    
     const salt = bcrypt.genSaltSync(10)
     return bcrypt.hashSync(password, salt)
  }
@@ -68,7 +69,9 @@ userSchema.methods.comparePassword = function(password = ''){
 }
 
 userSchema.methods.toJSON = function (){
-    const {__v, password, ...resto} = this.toObject()
+    const {__v,_id , password, ...resto} = this.toObject()
+
+    resto.uid = _id
 
     return resto
 }
