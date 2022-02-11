@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 const { loginPost , loginGet} = require("../controllers/login");
-const { validationCamp } = require("../middlewares/validation-camp");
+const { validationCamp } = require("../middlewares/");
 const {  validationEmail } = require("../helpers/db-validators");
-const { validateJwt } = require("../middlewares/validation-jwt");
+
 
 
 

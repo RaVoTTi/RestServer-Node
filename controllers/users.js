@@ -1,7 +1,7 @@
 const { response, request } = require("express");
 
 
-const User = require("../models/user");
+const {User} = require("../models");
 
 const userGet = async (req = request, res = response) => {
   const {limit = 5, since = 0} = req.query;

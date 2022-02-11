@@ -29,6 +29,8 @@ class Server {
     this.app.use('/api/users', require('../routes/users'))
     this.app.use('/auth', require('../routes/login'))
     this.app.use('/location', require('../routes/location'))
+    this.app.use('/division', require('../routes/division'))
+    
     this.app.use('*', require('../routes/404'))
   }
   middlewares(){

@@ -1,6 +1,6 @@
 const { response, request } = require("express");
 const { generateJWT } = require("../helpers/generate-jwt");
-const User = require("../models/user");
+const {User} = require("../models");
 
 const loginGet = (req = request, res = response) => {
   res.json({

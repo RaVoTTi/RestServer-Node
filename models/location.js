@@ -12,8 +12,9 @@ const locationSchema = new Schema ({
         required: [true, 'description is required'],
         },
     division: {
-        type: String,
-        required: [true, 'category is required'],
+        type: Schema.Types.ObjectId,
+        ref: 'Division',
+        required: [true, 'division is required'],
     },
     number: {
         type: String,
@@ -23,8 +24,19 @@ const locationSchema = new Schema ({
         type: String,
         },
     urlImage: String,
-    urlLocation: String
+    urlLocation: String,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref:'User',
+        required: true
+    }
 })
+
+locationSchema.methods.toJSON = function (){
+    const {__v, ...resto} = this.toObject()
+
+    return resto
+}
 
 
 module.exports = model('Location', locationSchema)

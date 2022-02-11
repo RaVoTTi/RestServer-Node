@@ -3,52 +3,45 @@ const { check } = require("express-validator");
 
 const { validationCamp } = require("../middlewares/validation-camp");
 const {
-  locationsGet,
-  locationGet,
-  locationPost,
-  locationPut,
-  locationDelete,
-} = require("../controllers/location");
+  divisionsGet,
+  divisionGet,
+  divisionPost,
+  divisionPut,
+  divisionDelete,
+} = require("../controllers/division");
 const {
   validationTitle,
   validationDivision,
   validationLocationId,
+  validationDivisionId,
 } = require("../helpers/db-validators");
 const { validateJwt, isRole, isAdminRole } = require("../middlewares");
 
 // /location
 const router = Router();
 
-router.get("/", locationsGet);
+router.get("/", divisionsGet);
 
 router.get("/:id",
 [
   check("id", "No es un id valido").isMongoId(),
-  check("id").custom(validationLocationId),
+  check("id").custom(validationDivisionId),
   // check("division").custom(validationDivision),
   validationCamp,
 ]
-, locationGet);
+, divisionGet);
 
 router.post(
   "/",
   [
     validateJwt,
     isRole('ADMIN_ROLE'),
-    check("title", "El title es obligatorio").notEmpty(),
-    check("title").custom(validationTitle),
-    check(
-      "description",
-      "El description debe ser como minimo de 5 caracteres"
-    ).isLength({ min: 5 }),
-    check("division", "El division es obligatorio").notEmpty(),
-    check("division").custom(validationDivision),
-    check("number", "El number es obligatorio ").notEmpty(),
-    check("number", "El number debe ser numeros ").isNumeric(),
-
+    check("name", "El title es obligatorio").notEmpty(),
+    check("name").custom(validationDivision(false)),
+    
     validationCamp,
   ],
-  locationPost
+  divisionPost
 );
 router.put(
   "/:id",
@@ -56,11 +49,11 @@ router.put(
     validateJwt,
     isRole('ADMIN_ROLE'),
     check("id", "No es un id valido").isMongoId(),
-    check("id").custom(validationLocationId),
-    // check("division").custom(validationDivision),
+    check("id").custom(validationDivisionId),
+    check("division").custom(validationDivision),
     validationCamp,
   ],
-  locationPut
+  divisionPut
 );
 
 router.delete(
@@ -69,10 +62,10 @@ router.delete(
     validateJwt,
     isAdminRole,
     check("id", "No es un id valido").isMongoId(),
-    check("id").custom(validationLocationId),
+    check("id").custom(validationDivisionId),
     validationCamp,
   ],
-  locationDelete
+  divisionDelete
 );
 
 module.exports = router;
