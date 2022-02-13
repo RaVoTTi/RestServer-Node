@@ -15,7 +15,6 @@ class Server {
 
         // Database
         dbConnection()
-
         // Middleware
         this.middlewares()
         // Router
@@ -25,26 +24,25 @@ class Server {
   }
 
   routes() {
+
+    // this.app.use('*', require('../routes/404'))
     
+
     this.app.use('/api/users', require('../routes/users'))
     this.app.use('/auth', require('../routes/login'))
-    this.app.use('/location', require('../routes/location'))
     this.app.use('/division', require('../routes/division'))
+    this.app.use('/search', require('../routes/search'))
+    this.app.use('/location', require('../routes/location'))
     
-    this.app.use('*', require('../routes/404'))
   }
   middlewares(){
 
     this.app.use(cors())
-
     this.app.use(express.json())
-
     this.app.use(express.urlencoded({extended: true}))
-
     this.app.use(morgan('dev'))
-
     this.app.use(express.static('public'))  
-    
+   
   }
 
   listen(){

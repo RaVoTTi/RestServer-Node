@@ -28,7 +28,7 @@ const isRole = (...roles) => {
     }
     if(!roles.includes(user.role) ){
       return res.status(402).json({
-        msg: "Usted no tiene el privilegio de borrar a nadie --",
+        msg: "Usted no tiene el privilegio de realizar esta tarea",
       });
     }
 

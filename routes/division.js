@@ -36,8 +36,10 @@ router.post(
   [
     validateJwt,
     isRole('ADMIN_ROLE'),
+    validationCamp, 
     check("name", "El title es obligatorio").notEmpty(),
-    check("name").custom(validationDivision(false)),
+    check("name").custom(validationDivision),
+
     
     validationCamp,
   ],
@@ -48,9 +50,10 @@ router.put(
   [
     validateJwt,
     isRole('ADMIN_ROLE'),
+    validationCamp,
     check("id", "No es un id valido").isMongoId(),
     check("id").custom(validationDivisionId),
-    check("division").custom(validationDivision),
+    check("name").custom(validationDivision),
     validationCamp,
   ],
   divisionPut
@@ -61,6 +64,7 @@ router.delete(
   [
     validateJwt,
     isAdminRole,
+    validationCamp,
     check("id", "No es un id valido").isMongoId(),
     check("id").custom(validationDivisionId),
     validationCamp,

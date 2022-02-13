@@ -3,18 +3,13 @@ const { Location, Division } = require("../models");
 
 const locationsGet = async (req = request, res = response) => {
   const { division, user, limit = 5, since = 0 } = req.query;
-  // const query = {division: 'alojamiento'}
-
-  // const locations = await Location.find().skip(Number(since)).limit(Number(limit))
-  // const count = await Location.count()
-
   const [count, locations] = await Promise.all([
     Location.count(),
     Location.find()
       .skip(Number(since))
       .limit(Number(limit))
-      .populate("user", "name")
-      .populate("division", "name"),
+      .populate("division", 'name')
+      .populate("user", "name"),
   ]);
   res.status(200).json({ count, locations });
 };
@@ -23,7 +18,7 @@ const locationGet = async (req = request, res = response) => {
 
   const location = await Location.findById(id)
     .populate("user", "name")
-    .populate("division");
+    .populate("division", 'name');
 
   res.status(200).json({ location });
 };
@@ -40,19 +35,17 @@ const locationPost = async (req = request, res = response) => {
     urlLocation,
   } = req.body;
 
-  const divisionObj = await Division.findOne({ name: division });
-
   const location = new Location({
     title,
     description,
-    division: divisionObj._id,
+    division,
     number,
     schedule,
     urlImage,
     urlLocation,
     user: user._id,
   });
-  console.log(location);
+
   await location.save();
 
   res.status(201).json({
@@ -63,22 +56,25 @@ const locationPost = async (req = request, res = response) => {
 const locationPut = async (req = request, res = response) => {
   const { id } = req.params;
   const { _id, user, division, ...resto } = req.body;
-  resto.user =  req.user; 
-  if(division){
-    resto.division = await Division.findOne({name: division})._id;
 
+  const existDivision = await Division.findById(division);
+  if (existDivision) {
+    resto.division;
   }
-  
-  const location = await Location.findByIdAndUpdate(id, resto, { new: true });
 
-  res.status(202).json( {location} );
+  resto.user = req.user._id;
+  const location = await Location.findByIdAndUpdate(id, resto, { new: true })
+    .populate("user", "name")
+    .populate("division", "name");
+
+  res.status(202).json({ location });
 };
 
 const locationDelete = async (req = request, res = response) => {
   const { id } = req.params;
   const location = await Location.findByIdAndDelete(id);
 
-  res.status(202).json(location.populate('user','name').populate('division'));
+  res.status(202).json(location);
 };
 
 module.exports = {

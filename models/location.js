@@ -14,7 +14,7 @@ const locationSchema = new Schema ({
     division: {
         type: Schema.Types.ObjectId,
         ref: 'Division',
-        required: [true, 'division is required'],
+        required: true
     },
     number: {
         type: String,

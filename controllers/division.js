@@ -10,29 +10,23 @@ const divisionsGet = async (req = request, res = response) => {
 
   const [count, divisions] = await Promise.all([
     Division.count(),
-    Division.find()
-      .skip(Number(since))
-      .limit(Number(limit))
-
-  
+    Division.find().skip(Number(since)).limit(Number(limit))
   ]);
-  res.status(200).json({count, divisions});
+  res.status(200).json({ count, divisions });
 };
 const divisionGet = async (req = request, res = response) => {
   const { id } = req.params;
 
-  const division = await Division.findById(id)
-
+  const division = await Division.findById(id);
 
   res.status(200).json({ division });
 };
 
 const divisionPost = async (req = request, res = response) => {
-
-  const name = req.body.name.toUpperCase()
+  const name = req.body.name.toUpperCase();
   const division = new Division({
-  name,
-    });
+    name,
+  });
 
   await division.save();
 
@@ -44,18 +38,21 @@ const divisionPost = async (req = request, res = response) => {
 const divisionPut = async (req = request, res = response) => {
   const { id } = req.params;
   const { _id, name } = req.body;
-  
-  const division = await Division.findByIdAndUpdate(id, name, { new: true });
 
-  res.status(202).json( {division} );
+  const division = await Division.findByIdAndUpdate(id, {name:name.toUpperCase()}, { new: true });
+
+  res.status(202).json({ division });
 };
 
 const divisionDelete = async (req = request, res = response) => {
   const { id } = req.params;
-  const division = await Division.findByIdAndUpdate(id, {state: false}, { new: true });
-  
+  const division = await Division.findByIdAndUpdate(
+    id,
+    { state: false },
+    { new: true }
+  );
 
-  res.status(202).json(division);
+  res.status(202).json({division});
 };
 
 module.exports = {

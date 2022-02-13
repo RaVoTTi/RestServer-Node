@@ -21,17 +21,14 @@ const validationTitle = async (title = "") => {
   }
 };
 
-const validationDivision = (not = true) => {
-  return async (division = "") => {
-    const exist = await Division.findOne({ name: division });
-    if(not) if (!exist) {
-      throw new Error(`El division no ${division} esta registrado`);
-    }
-    if (exist) {
-      throw new Error(`El division esta ${division} esta registrado`);
-    }
-  };
+const validationDivision = async (name) => {
+  const exist = await Division.findOne({ name: name.toUpperCase() });
+
+  if (exist) {
+    throw new Error(`La division ${name} esta registrado`);
+  }
 };
+
 const validationLocationId = async (id) => {
   const exist = await Location.findById(id);
   if (!exist) {
@@ -39,7 +36,8 @@ const validationLocationId = async (id) => {
   }
 };
 const validationDivisionId = async (id) => {
-  const exist = await Location.findById(id);
+  const exist = await Division.findById(id);
+
   if (!exist) {
     throw new Error(`El id ${id} no existe`);
   }
@@ -57,5 +55,7 @@ module.exports = {
   validationDivision,
   validationLocationId,
   validationDivisionId,
+  // notValidationDivisionId,
+
   validationUserId,
 };
