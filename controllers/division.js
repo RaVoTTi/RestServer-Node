@@ -2,7 +2,7 @@ const { response, request, query } = require("express");
 const { Division } = require("../models");
 
 const divisionsGet = async (req = request, res = response) => {
-  const { limit = 5, since = 0 } = req.query;
+  const { limit = 50, since = 0 } = req.query;
   // const query = {division: 'alojamiento'}
 
   // const locations = await Division.find()

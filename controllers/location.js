@@ -2,7 +2,7 @@ const { response, request, query } = require("express");
 const { Location, Division } = require("../models");
 
 const locationsGet = async (req = request, res = response) => {
-  const { division, user, limit = 5, since = 0 } = req.query;
+  const { division, user, limit = 50, since = 0 } = req.query;
   const [count, locations] = await Promise.all([
     Location.count(),
     Location.find()
