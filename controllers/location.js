@@ -74,7 +74,7 @@ const locationDelete = async (req = request, res = response) => {
   const { id } = req.params;
   const location = await Location.findByIdAndDelete(id);
 
-  res.status(202).json(location);
+  res.status(202).json({location});
 };
 
 module.exports = {

@@ -3,14 +3,14 @@ const { Division } = require("../models");
 
 const divisionsGet = async (req = request, res = response) => {
   const { limit = 50, since = 0 } = req.query;
-  // const query = {division: 'alojamiento'}
+  const query = {state: true}
 
   // const locations = await Division.find()
   // const count = await division.count()
 
   const [count, divisions] = await Promise.all([
     Division.count(),
-    Division.find().skip(Number(since)).limit(Number(limit))
+    Division.find(query).skip(Number(since)).limit(Number(limit))
   ]);
   res.status(200).json({ count, divisions });
 };
